@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verificação de Acesso</title>
+  <script>
+    function getDeviceId() {
+      let deviceId = localStorage.getItem('deviceId');
+      if (!deviceId) {
+        deviceId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+        localStorage.setItem('deviceId', deviceId);
+      }
+      return deviceId;
+    }
+
+    function checkIfAlreadyRespondedToday(deviceId) {
+      const today = new Date().toLocaleDateString();
+      const lastResponseDate = localStorage.getItem('lastResponseDate');
+      return lastResponseDate === today;
+    }
+
+    function redirectToForm() {
+      const deviceId = getDeviceId();
+      if (checkIfAlreadyRespondedToday(deviceId)) {
+        alert("Você já respondeu hoje. Tente novamente amanhã.");
+        return;
+      }
+      // Se não respondeu hoje, redireciona para o Forms
+      window.location.href = "LINK_DO_SEU_GOOGLE_FORMS_AQUI";
+    }
+  </script>
+</head>
+<body>
+  <button onclick="redirectToForm()">Acessar Formulário</button>
+</body>
+</html>
