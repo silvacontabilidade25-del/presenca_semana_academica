@@ -1,35 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Verificação de Acesso</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>II Semana Acadêmica de Ciências Contábeis</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #FFF5F7; /* Rosa claro */
+      color: #8B4513; /* Marrom dourado */
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: linear-gradient(to bottom, #FFF5F7, #FFE8F0);
+    }
+    .container {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(139, 69, 19, 0.2);
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+    }
+    h1 {
+      color: #D4AF37; /* Dourado */
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #8B4513;
+      margin-bottom: 25px;
+    }
+    .btn {
+      background-color: #D4AF37; /* Dourado */
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #B8860B; /* Dourado escuro */
+    }
+    .logo {
+      width: 80px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Adicione uma imagem (opcional) -->
+    <!-- <img src="https://exemplo.com/logo.png" alt="Logo" class="logo"> -->
+    
+    <h1>II Semana Acadêmica de Ciências Contábeis</h1>
+    <p>Preencha o formulário abaixo para participar do evento.</p>
+    
+    <button class="btn" onclick="checkAndRedirect()">Acessar Formulário</button>
+  </div>
+
   <script>
     function getDeviceId() {
       let deviceId = localStorage.getItem('deviceId');
       if (!deviceId) {
-        deviceId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+        deviceId = 'device_' + Math.random().toString(36).substr(2, 9);
         localStorage.setItem('deviceId', deviceId);
       }
       return deviceId;
     }
 
-    function checkIfAlreadyRespondedToday(deviceId) {
-      const today = new Date().toLocaleDateString();
-      const lastResponseDate = localStorage.getItem('lastResponseDate');
-      return lastResponseDate === today;
-    }
-
-    function redirectToForm() {
+    function checkAndRedirect() {
       const deviceId = getDeviceId();
-      if (checkIfAlreadyRespondedToday(deviceId)) {
-        alert("Você já respondeu hoje. Tente novamente amanhã.");
+      const today = new Date().toLocaleDateString('pt-BR');
+      const lastResponseDate = localStorage.getItem('lastResponseDate');
+
+      if (lastResponseDate === today) {
+        alert('Você já respondeu ao formulário hoje. Tente novamente amanhã!');
         return;
       }
+
       // Se não respondeu hoje, redireciona para o Forms
-      window.location.href = "LINK_DO_SEU_GOOGLE_FORMS_AQUI";
+      localStorage.setItem('lastResponseDate', today);
+      window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLScmSFfK4KL0OjOhrZevL-PIVPU2pWzj_mdHDXcxs1QnoMbGfQ/viewform';
     }
   </script>
-</head>
-<body>
-  <button onclick="redirectToForm()">Acessar Formulário</button>
 </body>
 </html>
